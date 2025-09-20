@@ -2,9 +2,9 @@ package Interfaces;
 
 public interface ConjuntoTda {
     void inicializarConjunto();
-    void agregar(int x);
-    void sacar(int x);
-    boolean pertenece(int x);
+    void agregar(String x);
+    void sacar(String x);
+    boolean pertenece(String x);
     boolean conjuntoVacio();
-    int elegir(); // devuelve un elemento cualquiera del conjunto
+    String elegir(); // devuelve un elemento cualquiera del conjunto
 }

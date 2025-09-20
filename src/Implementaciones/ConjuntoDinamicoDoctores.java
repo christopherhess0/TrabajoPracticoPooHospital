@@ -3,20 +3,10 @@ package Implementaciones;
 import Interfaces.ConjuntoTda;
 
 public class ConjuntoDinamicoDoctores implements ConjuntoTda {
-    private class datosMedico{
-        String Especialidad;
-        int HorarioInicio;
-        int HorarioFin;
-    };
-    private class Nodo {
-        int info;
-        datosMedico datosmedico;
-        Nodo sig;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    private static class Nodo {
+        String info;
+        Nodo sig;
     }
 
     private Nodo primero;
@@ -27,50 +17,44 @@ public class ConjuntoDinamicoDoctores implements ConjuntoTda {
     }
 
     @Override
-    public void agregar(int x) {
-        if (!pertenece(x)) {
+    public void agregar(String x) {
+        if (!pertenece(x)) {           // evita duplicados por contenido
             Nodo nuevo = new Nodo();
             nuevo.info = x;
-            nuevo.sig = primero;
+            nuevo.sig = primero;       // inserción al inicio
             primero = nuevo;
         }
     }
 
     @Override
-    public int elegir() {
-        return primero.info; // pre: no vacío
+    public String elegir() {
+        return primero.info;           // pre: conjunto no vacío
     }
 
     @Override
     public boolean conjuntoVacio() {
-        return (primero == null);
+        return primero == null;
     }
 
     @Override
-    public void sacar(int x) {
-        Nodo ant = null;
-        Nodo act = primero;
-
-        while (act != null && act.info != x) {
+    public void sacar(String x) {
+        Nodo ant = null, act = primero;
+        while (act != null && !act.info.equals(x)) {
             ant = act;
             act = act.sig;
         }
-
-        if (act != null) { // lo encontró
-            if (ant == null) { // estaba en la primera posición
-                primero = primero.sig;
-            } else {
-                ant.sig = act.sig;
-            }
+        if (act != null) {             // encontrado
+            if (ant == null) primero = act.sig;
+            else ant.sig = act.sig;
         }
     }
 
     @Override
-    public boolean pertenece(int x) {
+    public boolean pertenece(String x) {
         Nodo aux = primero;
-        while (aux != null && aux.info != x) {
+        while (aux != null && !aux.info.equals(x)) { // compara contenido
             aux = aux.sig;
         }
-        return (aux != null);
+        return aux != null;
     }
 }

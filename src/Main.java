@@ -1,8 +1,13 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import Implementaciones.ConjuntoDinamicoDoctores;
+import Interfaces.ConjuntoTda;
+import Algoritmos.Algoritmos;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hola Mundo");
+        ConjuntoDinamicoDoctores listaMedicos = new ConjuntoDinamicoDoctores();
+        listaMedicos.agregar("Juan Perez");
+        listaMedicos.agregar("Christopher Hess");
+        Algoritmos.mostrarConjunto(listaMedicos);
     }
 
 };

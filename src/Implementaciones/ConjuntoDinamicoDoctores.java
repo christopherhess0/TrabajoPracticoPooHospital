@@ -1,8 +1,8 @@
 package Implementaciones;
 
-import Interfaces.ConjuntoTda;
+import Interfaces.ConjuntoTdaString;
 
-public class ConjuntoDinamicoDoctores implements ConjuntoTda {
+public class ConjuntoDinamicoDoctores implements ConjuntoTdaString {
 
     private static class Nodo {
         String info;
@@ -11,50 +11,33 @@ public class ConjuntoDinamicoDoctores implements ConjuntoTda {
 
     private Nodo primero;
 
-    @Override
-    public void inicializarConjunto() {
-        primero = null; // arranca vacío
-    }
+    public void inicializarConjunto() { primero = null; }
 
-    @Override
     public void agregar(String x) {
-        if (!pertenece(x)) {           // evita duplicados por contenido
-            Nodo nuevo = new Nodo();
-            nuevo.info = x;
-            nuevo.sig = primero;       // inserción al inicio
-            primero = nuevo;
+        if (!pertenece(x)) {
+            Nodo n = new Nodo();
+            n.info = x;
+            n.sig = primero;
+            primero = n;
         }
     }
 
-    @Override
-    public String elegir() {
-        return primero.info;           // pre: conjunto no vacío
-    }
-
-    @Override
-    public boolean conjuntoVacio() {
-        return primero == null;
-    }
-
-    @Override
     public void sacar(String x) {
         Nodo ant = null, act = primero;
-        while (act != null && !act.info.equals(x)) {
-            ant = act;
-            act = act.sig;
-        }
-        if (act != null) {             // encontrado
+        while (act != null && !act.info.equals(x)) { ant = act; act = act.sig; }
+        if (act != null) {
             if (ant == null) primero = act.sig;
             else ant.sig = act.sig;
         }
     }
 
-    @Override
     public boolean pertenece(String x) {
         Nodo aux = primero;
-        while (aux != null && !aux.info.equals(x)) { // compara contenido
-            aux = aux.sig;
-        }
+        while (aux != null && !aux.info.equals(x)) aux = aux.sig;
         return aux != null;
     }
+
+    public boolean conjuntoVacio() { return primero == null; }
+
+    public String elegir() { return primero.info; } // pre: no vacío
 }

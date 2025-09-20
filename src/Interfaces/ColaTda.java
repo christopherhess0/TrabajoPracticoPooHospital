@@ -1,9 +1,9 @@
 package Interfaces;
 
 public interface ColaTda {
-    void inicializarCola();
-    void acolar(int x);
-    void desacolar();
-    int primero();
+    void inicializarCola(); // pre: -
+    void acolar(int x);     // encola al final
+    void desacolar();       // saca el primero (pre: !colaVacia())
+    int primero();          // mira el primero (pre: !colaVacia())
     boolean colaVacia();
 }

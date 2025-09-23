@@ -28,9 +28,12 @@ public class Hospital {
     };
 
     public void inicializar() {
-        medicos = new ConjuntoDinamicoDoctores(); medicos.inicializarConjunto();
-        infoMedico = new DiccionarioDoctoresDinamico(); infoMedico.inicializarDiccionario();
-        pacientes = new DiccionarioPacientesDinamico(); pacientes.inicializarDiccionario();
+        medicos = new ConjuntoDinamicoDoctores();
+        medicos.inicializarConjunto();
+        infoMedico = new DiccionarioDoctoresDinamico();
+        infoMedico.inicializarDiccionario();
+        pacientes = new DiccionarioPacientesDinamico();
+        pacientes.inicializarDiccionario();
         colas = new ColaTda[ESP.length];
         atendidos = new int[ESP.length];
         for (int i=0;i<ESP.length;i++){
@@ -40,9 +43,9 @@ public class Hospital {
     }
 
     // === Médicos ===
-    public void altaMedico(String nombre, int especialidad, int hIni, int hFin) {
+    public void altaMedico(String nombre, DatosMedico medico) {
         if (!medicos.pertenece(nombre)) medicos.agregar(nombre);
-        infoMedico.agregar(nombre, ESP[especialidad], hIni, hFin);
+        infoMedico.agregar(nombre, medico);
     }
 
     // === Pacientes ===
@@ -60,6 +63,7 @@ public class Hospital {
     /** Llama al primer paciente de la cola de la especialidad del médico. */
     public int comenzarAtencion(String nombreMedico) {
         DatosMedico dm = infoMedico.recuperar(nombreMedico);
+        if (dm == null) return -1; // médico no encontrado en el diccionario
         int idx = indiceEspecialidad(dm.especialidad);
         if (colas[idx].colaVacia()) return -1; // nadie en cola
         int dni = colas[idx].primero();
@@ -83,7 +87,11 @@ public class Hospital {
         while (!medicos.conjuntoVacio()) {
             String nom = medicos.elegir();
             DatosMedico dm = infoMedico.recuperar(nom);
-            System.out.println(nom+" | "+dm.especialidad+" | "+dm.horaInicio+"-"+dm.horaFin);
+            if (dm == null) {
+                System.out.println(nom+" | (sin datos) | -");
+            } else {
+                System.out.println(nom+" | "+dm.especialidad+" | "+dm.horaInicio+"-"+dm.horaFin);
+            }
             aux.agregar(nom);
             medicos.sacar(nom);
         }
